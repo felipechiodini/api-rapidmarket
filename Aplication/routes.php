@@ -9,6 +9,7 @@ Route::middleware('api')
         Route::prefix('cart')
             ->group(function () {
                 Route::get('show', Aplication\Cart\Show\Controller::class);
+                Route::post('add', Aplication\Cart\Add\Controller::class);
                 Route::post('increase-item', Aplication\Cart\Increase\Controller::class);
                 Route::post('decrease-item', Aplication\Cart\Decrease\Controller::class);
                 Route::post('finish', Aplication\Cart\Finish\Controller::class);
