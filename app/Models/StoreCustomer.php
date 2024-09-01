@@ -9,11 +9,13 @@ class StoreCustomer extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'store_id',
         'name',
         'email',
-        'phone',
+        'cellphone',
         'password'
     ];
 }

@@ -62,7 +62,7 @@ return new class extends Migration
             $table->string('value');
         });
 
-        Schema::create('customer_cart', function (Blueprint $table) {
+        Schema::create('customer_carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('store_customers');
             $table->boolean('open');
@@ -70,9 +70,8 @@ return new class extends Migration
 
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cart_id')->references('id')->on('customer_cart')->cascadeOnDelete();
+            $table->foreignId('cart_id')->references('id')->on('customer_carts')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('store_products');
-            $table->float('price');
             $table->integer('quantity');
         });
 
