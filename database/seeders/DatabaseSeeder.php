@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CustomerAddress;
 use App\Models\Store;
 use App\Models\StoreCategory;
 use App\Models\StoreCustomer;
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         Store::factory()->create();
         StoreCustomer::factory()->create(['store_id' => 1]);
+        CustomerAddress::factory()->create(['customer_id' => 1]);
         StoreCategory::factory()->create(['store_id' => 1]);
         StoreProduct::factory()->create(['store_id' => 1, 'category_id' => 1]);
     }

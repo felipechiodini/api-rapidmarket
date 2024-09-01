@@ -13,20 +13,13 @@ use Application\Order\Enum\Status;
 
 class Controller
 {
-    private $getCart;
-
-    public function __construct(GetCart $getCart)
+    public function __invoke(Form $request, GetCart $getCart)
     {
-        $this->getCart = $getCart;
-    }
-
-    public function __invoke(Form $request)
-    {
-        $cart = $this->getCart->execute($request->user()->id);
+        $cart = $getCart->execute(1);
 
         $customerOrder = CustomerOrder::query()
             ->create([
-                'customer_id' => $request->get('customer_id'),
+                'customer_id' => 1,
                 'status' => Status::Pending,
                 'total' => $cart->total,
                 'subtotal' => $cart->getSubtotal(),
@@ -51,13 +44,13 @@ class Controller
         OrderAddress::query()
             ->create([
                 'order_id' => $customerOrder->id,
-                'cep' => $customerAddress->street,
+                'cep' => $customerAddress->cep,
                 'street' => $customerAddress->street,
-                'neighborhood' => $customerAddress->street,
-                'number' => $customerAddress->street,
-                'city' => $customerAddress->street,
-                'state' => $customerAddress->street,
-                'country' => $customerAddress->street,
+                'neighborhood' => $customerAddress->neighborhood,
+                'number' => $customerAddress->number,
+                'city' => $customerAddress->city,
+                'state' => $customerAddress->state,
+                'country' => $customerAddress->country,
             ]);
 
         OrderSchedule::query()

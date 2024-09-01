@@ -78,11 +78,14 @@ return new class extends Migration
         Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('store_customers')->cascadeOnDelete();
-            $table->string('address');
+            $table->string('cep');
+            $table->string('street');
+            $table->string('number');
+            $table->string('complement')->nullable();
+            $table->string('neighborhood');
             $table->string('city');
             $table->string('state');
             $table->string('country');
-            $table->string('postal_code');
         });
 
         Schema::create('customer_orders', function (Blueprint $table) {
@@ -117,9 +120,14 @@ return new class extends Migration
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->references('id')->on('customer_orders');
-            $table->foreignId('product_id')->references('id')->on('store_products');
-            $table->float('price');
-            $table->integer('quantity');
+            $table->string('cep');
+            $table->string('street');
+            $table->string('number');
+            $table->string('complement')->nullable();
+            $table->string('neighborhood');
+            $table->string('city');
+            $table->string('state');
+            $table->string('country');
         });
 
         Schema::create('order_schedules', function (Blueprint $table) {

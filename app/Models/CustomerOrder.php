@@ -9,7 +9,9 @@ class CustomerOrder extends Model
 {
     use HasFactory;
 
-    protected $fillble = [
+    public $timestamps = false;
+
+    protected $fillable = [
         'customer_id',
         'status',
         'total',
