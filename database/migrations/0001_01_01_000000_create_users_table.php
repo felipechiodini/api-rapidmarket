@@ -47,12 +47,12 @@ return new class extends Migration
         Schema::create('store_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->references('id')->on('stores');
+            $table->foreignId('category_id')->references('id')->on('store_categories');
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->float('price');
             $table->float('price_from')->nullable();
-            $table->timestamps();
         });
 
         Schema::create('product_configurations', function (Blueprint $table) {
@@ -60,12 +60,6 @@ return new class extends Migration
             $table->foreignId('product_id')->references('id')->on('store_products');
             $table->string('key');
             $table->string('value');
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('customer_cart', function (Blueprint $table) {
@@ -95,11 +89,30 @@ return new class extends Migration
         Schema::create('customer_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('store_customers');
+            $table->string('status');
+            $table->float('total');
+            $table->float('subtotal');
+            $table->float('discount');
+            $table->float('delivery_fee');
+            $table->timestamp('requested_at')->nullable();
         });
 
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->references('id')->on('customer_orders');
+            $table->foreignId('product_id')->references('id')->on('store_products');
+            $table->float('price');
+            $table->integer('quantity');
+        });
 
+        Schema::create('order_payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->references('id')->on('customer_orders');
+            $table->string('status');
+            $table->string('type');
+            $table->string('identifier')->nullable();
+            $table->float('value');
+            $table->timestamp('paid_at')->nullable();
         });
 
         Schema::create('order_addresses', function (Blueprint $table) {
@@ -110,6 +123,10 @@ return new class extends Migration
             $table->integer('quantity');
         });
 
+        Schema::create('order_schedules', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->references('id')->on('customer_orders');
+        });
     }
 
     /**
