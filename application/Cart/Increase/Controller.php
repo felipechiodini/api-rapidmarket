@@ -7,16 +7,9 @@ use Application\Customer\UseCases\GetCart;
 
 class Controller
 {
-    private $getCart;
-
-    public function __construct(GetCart $getCart)
+    public function __invoke(Form $request, GetCart $getCart)
     {
-        $this->getCart = $getCart;
-    }
-
-    public function __invoke(Form $request)
-    {
-        $cart = $this->getCart->execute($request->user()->id);
+        $cart = $getCart->execute($request->user()->id);
 
         $item = CartItem::query()
             ->where('cart_id', $cart->id)

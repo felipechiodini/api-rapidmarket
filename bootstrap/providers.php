@@ -1,7 +1,6 @@
 <?php
 
-use Application\ServiceProvider;
-
 return [
-    ServiceProvider::class
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    Application\ServiceProvider::class,
 ];

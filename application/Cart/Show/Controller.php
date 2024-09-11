@@ -6,16 +6,9 @@ use Application\Customer\UseCases\GetCart;
 
 class Controller
 {
-    public $getCart;
-
-    public function __construct(GetCart $getCart)
+    public function __invoke(Form $request, GetCart $getCart)
     {
-        $this->getCart = $getCart;
-    }
-
-    public function __invoke(Form $request)
-    {
-        $cart = $this->getCart->execute($request->user()->id);
+        $cart = $getCart->execute($request->user()->id);
 
         return response()
             ->json(compact('cart'));

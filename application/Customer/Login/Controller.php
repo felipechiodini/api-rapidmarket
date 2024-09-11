@@ -2,33 +2,23 @@
 
 namespace Application\Customer\Login;
 
-use App\Models\StoreCustomer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        $credentials = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+        $credentials = request(['email', 'password']);
 
-        $user = StoreCustomer::query()
-            ->where('email', $credentials['email'])
-            ->first();
-
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => 'Usuário ou senha inválidos.',
-            ]);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-
-        return response()
-            ->json(compact('user', 'token'));
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user(),
+        ]);
     }
 }

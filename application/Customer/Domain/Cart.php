@@ -25,19 +25,4 @@ class Cart
         $this->products = $products;
         $this->total = $products->sum('price');
     }
-
-    public function getSubtotal()
-    {
-        return 100;
-    }
-
-    public function getDiscount()
-    {
-        return 0;
-    }
-
-    public function getDeliveryFee()
-    {
-        return 20;
-    }
 }

@@ -15,16 +15,16 @@ class Controller
 {
     public function __invoke(Form $request, GetCart $getCart)
     {
-        $cart = $getCart->execute(1);
+        $cart = $getCart->execute($request->user()->id);
 
         $customerOrder = CustomerOrder::query()
             ->create([
-                'customer_id' => 1,
+                'customer_id' => $request->user()->id,
                 'status' => Status::Pending,
                 'total' => $cart->total,
-                'subtotal' => $cart->getSubtotal(),
-                'discount' => $cart->getDiscount(),
-                'delivery_fee' => $cart->getDeliveryFee(),
+                'subtotal' => $cart->total,
+                'discount' => 0,
+                'delivery_fee' => 10,
                 'requested_at' => now(),
             ]);
 

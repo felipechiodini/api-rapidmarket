@@ -11,9 +11,14 @@ class Controller
         CustomerAddress::query()
             ->create([
                 'customer_id' => $request->user()->id,
-                'name' => $request->name,
-                'address' => $request->address,
-                'phone' => $request->phone
+                'street' => $request->street,
+                'number' => $request->number,
+                'neighborhood' => $request->neighborhood,
+                'complement' => $request->complement,
+                'cep' => $request->cep,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
             ]);
 
         $message = 'Address added';
