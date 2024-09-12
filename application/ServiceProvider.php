@@ -2,13 +2,12 @@
 
 namespace Application;
 
-use Application\Customer\UseCases\GetCart;
 use Illuminate\Support\ServiceProvider as SupportServiceProvider;
 
 class ServiceProvider extends SupportServiceProvider
 {
     public $bindings = [
-        GetCart::class => GetCart::class
+        \Application\Customer\UseCases\GetCart::class => \Application\Customer\UseCases\GetCart::class
     ];
 
     public function boot()
