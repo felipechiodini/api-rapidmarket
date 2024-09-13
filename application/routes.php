@@ -11,7 +11,7 @@ Route::prefix('app')
             ->group(function () {
                 Route::get('home', Application\Home\Controller::class);
                 Route::get('product', Application\Product\Show\Controller::class);
-                Route::post('customer/create-account', Application\Customer\CreateAccount\Controller::class);
+                Route::post('register', Application\Customer\CreateAccount\Controller::class);
                 Route::post('customer/address', Application\Address\Store\Controller::class);
                 Route::get('cart/show', Application\Cart\Show\Controller::class);
                 Route::post('cart/add', Application\Cart\Add\Controller::class);

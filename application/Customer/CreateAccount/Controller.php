@@ -8,15 +8,20 @@ class Controller
 {
     public function __invoke(Form $request)
     {
-        StoreCustomer::query()
+        $user = StoreCustomer::query()
             ->create([
-                'name' => $request->get('name'),
-                'email' => $request->get('email'),
+                'store_id' => 1,
+                'name' => $request->name,
+                'email' => $request->email,
+                'cellphone' => $request->cellphone,
+                'password' => $request->password
             ]);
+
+        $token = auth()->login($user);
 
         $message = 'Customer created';
 
         return response()
-            ->json(compact('message'));
+            ->json(compact('message', 'user', 'token'));
     }
 }
