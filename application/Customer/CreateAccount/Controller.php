@@ -3,6 +3,8 @@
 namespace Application\Customer\CreateAccount;
 
 use App\Models\StoreCustomer;
+use Felipechiodini\Helpers\Helpers;
+use Illuminate\Support\Facades\Hash;
 
 class Controller
 {
@@ -12,9 +14,9 @@ class Controller
             ->create([
                 'store_id' => 1,
                 'name' => $request->name,
-                'email' => $request->email,
-                'cellphone' => $request->cellphone,
-                'password' => $request->password
+                'email' => mb_strtolower($request->email),
+                'cellphone' => Helpers::clearAllIsNotNumber($request->cellphone),
+                'password' => Hash::make($request->password)
             ]);
 
         $token = auth()->login($user);
