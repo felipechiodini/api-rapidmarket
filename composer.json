@@ -23,6 +23,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Panel\\": "panel/",
             "Application\\": "application/",
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
